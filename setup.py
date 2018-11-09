@@ -6,15 +6,15 @@ with open(path.join(this_directory, 'README.md')) as f:
     long_description = f.read()
 
 setup(
-    name='autoclust',
+    name='validclust',
     version='0.0.9000',
-    description='Automated clustering with Python',
+    description='Validate clustering results',
     long_description=long_description,
     long_description_content_type='text/markdown',
     author='Christopher Baker',
     author_email='chriscrewbaker@gmail.com',
     license='LICENSE.txt',
-    packages=['autoclust'],
+    packages=['validclust'],
     install_requires=['scikit-learn'],
     setup_requires=["pytest-runner"]
 )

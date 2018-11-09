@@ -1,3 +1,3 @@
-# autoclust
+# validclust
 
-> Automated clustering with Python
+> Validate clustering results
