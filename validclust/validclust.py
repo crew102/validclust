@@ -27,25 +27,36 @@ def _get_index_funs(indices, metric):
     return {i: _index_switcher[i] for i in indices}
 
 
-def validclust(data, n_clusters=[2, 3, 4, 5],
-               indices=['silhouette', 'calinski', 'davies'],
-               methods=['hierarchical', 'kmeans'],
-               linkage='ward', metric='euclidean'):
+class ValidClust:
 
-    method_objs = _get_method_objs(methods, linkage, metric)
-    index_funs = _get_index_funs(indices, metric)
+    def __init__(self, data, n_clusters=[2, 3, 4, 5],
+                 indices=['silhouette', 'calinski', 'davies'],
+                 methods=['hierarchical', 'kmeans'],
+                 linkage='ward', metric='euclidean'):
 
-    index = pd.MultiIndex.from_product(
-        [methods, indices],
-        names=['method', 'index']
-    )
-    output_df = pd.DataFrame(index=index, columns=n_clusters)
+        self.data = data
+        self.n_clusters = n_clusters
+        self.indices = indices
+        self.methods = methods
+        self.linkage = linkage
+        self.metric = metric
 
-    for k in n_clusters:
-        for alg_name, alg_obj in method_objs.items():
-            alg_obj.set_params(n_clusters=k)
-            labels = alg_obj.fit_predict(data)
-            scores = [value(data, labels) for key, value in index_funs.items()]
-            output_df.loc[(alg_name, indices), k] = scores
+    def validate(self):
+        method_objs = _get_method_objs(self.methods, self.linkage, self.metric)
+        index_funs = _get_index_funs(self.indices, self.metric)
 
-    return output_df
+        index = pd.MultiIndex.from_product(
+            [self.methods, self.indices],
+            names=['method', 'index']
+        )
+        output_df = pd.DataFrame(index=index, columns=self.n_clusters)
+
+        for k in self.n_clusters:
+            for alg_name, alg_obj in method_objs.items():
+                alg_obj.set_params(n_clusters=k)
+                labels = alg_obj.fit_predict(self.data)
+                scores = [value(self.data, labels) for key, value in
+                          index_funs.items()]
+                output_df.loc[(alg_name, self.indices), k] = scores
+
+        return output_df
