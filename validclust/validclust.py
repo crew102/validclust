@@ -22,6 +22,8 @@ class ValidClust:
         self.linkage = linkage
         self.metric = metric
 
+        self.score_df = None
+
     def _get_method_objs(self):
         _method_switcher = {
             'hierarchical': AgglomerativeClustering(),
@@ -74,4 +76,6 @@ class ValidClust:
                 ]
                 output_df.loc[(alg_name, self.indices), k] = scores
 
-        return output_df
+        self.score_df = output_df
+
+        return self
