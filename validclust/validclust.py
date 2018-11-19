@@ -3,6 +3,7 @@ from sklearn.cluster import AgglomerativeClustering, KMeans, SpectralClustering
 from sklearn.metrics import (
     silhouette_score, calinski_harabaz_score, davies_bouldin_score
 )
+from sklearn.metrics.pairwise import pairwise_distances
 
 from .indices import dunn
 
@@ -48,6 +49,11 @@ class ValidClust:
     def validate(self):
         method_objs = self._get_method_objs()
         index_funs = self._get_index_funs()
+        dist_inds = ['silhouette', 'dunn']
+
+        d_overlap = [i for i in self.indices if i in dist_inds]
+        if d_overlap or 'hierarchical' in self.methods:
+            dist = pairwise_distances(self.data)
 
         index = pd.MultiIndex.from_product(
             [self.methods, self.indices],
@@ -58,9 +64,14 @@ class ValidClust:
         for k in self.n_clusters:
             for alg_name, alg_obj in method_objs.items():
                 alg_obj.set_params(n_clusters=k)
-                labels = alg_obj.fit_predict(self.data)
-                scores = [value(self.data, labels) for key, value in
-                          index_funs.items()]
+                if alg_name == 'hierarchical' and self.linkage != 'ward':
+                    labels = alg_obj.fit_predict(dist)
+                else:
+                    labels = alg_obj.fit_predict(self.data)
+                scores = [
+                    fun(dist, labels) if key in dist_inds else fun(self.data, labels)
+                    for key, fun in index_funs.items()
+                ]
                 output_df.loc[(alg_name, self.indices), k] = scores
 
         return output_df
