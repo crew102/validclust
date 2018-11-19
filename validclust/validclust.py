@@ -4,27 +4,7 @@ from sklearn.metrics import (
     silhouette_score, calinski_harabaz_score, davies_bouldin_score
 )
 
-
-def _get_method_objs(methods, linkage, metric):
-    _method_switcher = {
-        'hierarchical': AgglomerativeClustering(),
-        'kmeans': KMeans(),
-        'spectral': SpectralClustering()
-    }
-    objs = {i: _method_switcher[i] for i in methods}
-    for key, value in objs.items():
-        if isinstance(value, AgglomerativeClustering):
-            value.set_params(linkage=linkage, affinity=metric)
-    return objs
-
-
-def _get_index_funs(indices, metric):
-    _index_switcher = {
-        'silhouette': lambda X, labels: silhouette_score(X, labels, metric),
-        'calinski': lambda X, labels: calinski_harabaz_score(X, labels),
-        'davies': lambda X, labels: davies_bouldin_score(X, labels)
-    }
-    return {i: _index_switcher[i] for i in indices}
+from .indices import dunn
 
 
 class ValidClust:
@@ -41,9 +21,33 @@ class ValidClust:
         self.linkage = linkage
         self.metric = metric
 
+    def _get_method_objs(self):
+        _method_switcher = {
+            'hierarchical': AgglomerativeClustering(),
+            'kmeans': KMeans(),
+            'spectral': SpectralClustering()
+        }
+        objs = {i: _method_switcher[i] for i in self.methods}
+        for key, value in objs.items():
+            if isinstance(value, AgglomerativeClustering):
+                affinity = 'euclidean' if self.linkage == 'ward' else 'precomputed'
+                value.set_params(linkage=self.linkage, affinity=affinity)
+        return objs
+
+    def _get_index_funs(self):
+        _index_switcher = {
+            'silhouette': lambda X, labels: silhouette_score(
+                X, labels, 'precomputed'
+            ),
+            'calinski': lambda X, labels: calinski_harabaz_score(X, labels),
+            'davies': lambda X, labels: davies_bouldin_score(X, labels),
+            'dunn': lambda X, labels: dunn(X, labels)
+        }
+        return {i: _index_switcher[i] for i in self.indices}
+
     def validate(self):
-        method_objs = _get_method_objs(self.methods, self.linkage, self.metric)
-        index_funs = _get_index_funs(self.indices, self.metric)
+        method_objs = self._get_method_objs()
+        index_funs = self._get_index_funs()
 
         index = pd.MultiIndex.from_product(
             [self.methods, self.indices],
