@@ -15,6 +15,16 @@ class ValidClust:
                  methods=['hierarchical', 'kmeans'],
                  linkage='ward', metric='euclidean'):
 
+        for i in ['n_clusters', 'indices', 'methods']:
+            if type(locals()[i]) is not list:
+                raise ValueError('{0} must be a list'.format(i))
+
+        if 'hierarchical' in methods and linkage == 'ward' and metric != 'euclidean':
+            raise ValueError(
+                "You must specify `metric='euclidean'` if you use choose the "
+                "ward linkage type"
+            )
+
         self.data = data
         self.n_clusters = n_clusters
         self.indices = indices
