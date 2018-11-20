@@ -1,9 +1,10 @@
 import pandas as pd
+import numpy as np
 from sklearn.cluster import AgglomerativeClustering, KMeans, SpectralClustering
 from sklearn.metrics import (
-    silhouette_score, calinski_harabaz_score, davies_bouldin_score
+    silhouette_score, calinski_harabaz_score, davies_bouldin_score,
+    pairwise_distances
 )
-from sklearn.metrics.pairwise import pairwise_distances
 
 from .indices import dunn
 
@@ -11,7 +12,7 @@ from .indices import dunn
 class ValidClust:
 
     def __init__(self, data, n_clusters=[2, 3, 4, 5],
-                 indices=['silhouette', 'calinski', 'davies'],
+                 indices=['silhouette', 'calinski', 'davies', 'dunn'],
                  methods=['hierarchical', 'kmeans'],
                  linkage='ward', metric='euclidean'):
 
@@ -42,7 +43,7 @@ class ValidClust:
         }
         objs = {i: _method_switcher[i] for i in self.methods}
         for key, value in objs.items():
-            if isinstance(value, AgglomerativeClustering):
+            if key == 'hierarchical':
                 affinity = 'euclidean' if self.linkage == 'ward' else 'precomputed'
                 value.set_params(linkage=self.linkage, affinity=affinity)
         return objs
@@ -71,7 +72,9 @@ class ValidClust:
             [self.methods, self.indices],
             names=['method', 'index']
         )
-        output_df = pd.DataFrame(index=index, columns=self.n_clusters)
+        output_df = pd.DataFrame(
+            index=index, columns=self.n_clusters, dtype=np.float64
+        )
 
         for k in self.n_clusters:
             for alg_name, alg_obj in method_objs.items():
