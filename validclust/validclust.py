@@ -1,11 +1,11 @@
 import pandas as pd
 import numpy as np
 from sklearn.cluster import AgglomerativeClustering, KMeans, SpectralClustering
-from sklearn.metrics import (
-    silhouette_score, calinski_harabaz_score, pairwise_distances
-)
+from sklearn.metrics import pairwise_distances
 
-from .indices import dunn, davies_bouldin_score2
+from .indices import (
+    dunn, davies_bouldin_score2, silhouette_score2, calinski_harabaz_score2
+)
 
 
 class ValidClust:
@@ -49,12 +49,16 @@ class ValidClust:
 
     def _get_index_funs(self):
         _index_switcher = {
-            'silhouette': lambda X, labels: silhouette_score(
-                X, labels, 'precomputed'
+            'silhouette': lambda data, dist, labels: silhouette_score2(
+                data, dist, labels
             ),
-            'calinski': lambda X, labels: calinski_harabaz_score(X, labels),
-            'davies': lambda X, labels: davies_bouldin_score2(X, labels),
-            'dunn': lambda X, labels: dunn(X, labels)
+            'calinski': lambda data, dist, labels: calinski_harabaz_score2(
+                data, dist, labels
+            ),
+            'davies': lambda data, dist, labels: davies_bouldin_score2(
+                data, dist, labels
+            ),
+            'dunn': lambda data, dist, labels: dunn(data, dist, labels)
         }
         return {i: _index_switcher[i] for i in self.indices}
 
@@ -66,6 +70,8 @@ class ValidClust:
         d_overlap = [i for i in self.indices if i in dist_inds]
         if d_overlap or 'hierarchical' in self.methods:
             dist = pairwise_distances(self.data)
+        else:
+            dist = None
 
         index = pd.MultiIndex.from_product(
             [self.methods, self.indices],
@@ -85,8 +91,7 @@ class ValidClust:
                 # have to iterate over self.indices here so that ordering of
                 # validity indices is same in scores list as it is in output_df
                 scores = [
-                    index_funs[key](dist, labels) if key in dist_inds
-                    else index_funs[key](self.data, labels)
+                    index_funs[key](self.data, dist, labels)
                     for key in self.indices
                 ]
                 output_df.loc[(alg_name, self.indices), k] = scores
