@@ -83,9 +83,12 @@ class ValidClust:
                     labels = alg_obj.fit_predict(dist)
                 else:
                     labels = alg_obj.fit_predict(self.data)
+                # have to iterate over self.indices here so that ordering of
+                # validity indices is same in scores list as it is in output_df
                 scores = [
-                    fun(dist, labels) if key in dist_inds else fun(self.data, labels)
-                    for key, fun in index_funs.items()
+                    index_funs[key](dist, labels) if key in dist_inds
+                    else index_funs[key](self.data, labels)
+                    for key in self.indices
                 ]
                 output_df.loc[(alg_name, self.indices), k] = scores
 
