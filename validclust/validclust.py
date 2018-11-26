@@ -2,11 +2,10 @@ import pandas as pd
 import numpy as np
 from sklearn.cluster import AgglomerativeClustering, KMeans, SpectralClustering
 from sklearn.metrics import (
-    silhouette_score, calinski_harabaz_score, davies_bouldin_score,
-    pairwise_distances
+    silhouette_score, calinski_harabaz_score, pairwise_distances
 )
 
-from .indices import dunn
+from .indices import dunn, davies_bouldin_score2
 
 
 class ValidClust:
@@ -54,7 +53,7 @@ class ValidClust:
                 X, labels, 'precomputed'
             ),
             'calinski': lambda X, labels: calinski_harabaz_score(X, labels),
-            'davies': lambda X, labels: davies_bouldin_score(X, labels),
+            'davies': lambda X, labels: davies_bouldin_score2(X, labels),
             'dunn': lambda X, labels: dunn(X, labels)
         }
         return {i: _index_switcher[i] for i in self.indices}

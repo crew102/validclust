@@ -1,4 +1,7 @@
+import warnings
+
 import numpy as np
+from sklearn.metrics import davies_bouldin_score
 
 
 def _get_clust_pairs(clusters):
@@ -16,3 +19,9 @@ def dunn(X, labels):
         for i in clusters
     ]
     return min(inter_dists) / max(intra_dists)
+
+
+def davies_bouldin_score2(X, labels):
+    with warnings.catch_warnings():
+        warnings.filterwarnings('ignore', 'divide by zero')
+        return davies_bouldin_score(X, labels)
