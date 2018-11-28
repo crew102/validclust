@@ -50,17 +50,11 @@ class ValidClust:
 
     def _get_index_funs(self):
         _index_switcher = {
-            'silhouette': lambda data, dist, labels: silhouette_score2(
-                data, dist, labels
-            ),
-            'calinski': lambda data, dist, labels: calinski_harabaz_score2(
-                data, dist, labels
-            ),
-            'davies': lambda data, dist, labels: davies_bouldin_score2(
-                data, dist, labels
-            ),
-            'dunn': lambda data, dist, labels: dunn(data, dist, labels),
-            'cop': lambda data, dist, labels: cop(data, dist, labels)
+            'silhouette': silhouette_score2,
+            'calinski': calinski_harabaz_score2,
+            'davies': davies_bouldin_score2,
+            'dunn': dunn,
+            'cop': cop
         }
         return {i: _index_switcher[i] for i in self.indices}
 
