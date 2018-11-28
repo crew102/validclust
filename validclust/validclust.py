@@ -4,14 +4,15 @@ from sklearn.cluster import AgglomerativeClustering, KMeans, SpectralClustering
 from sklearn.metrics import pairwise_distances
 
 from .indices import (
-    dunn, davies_bouldin_score2, silhouette_score2, calinski_harabaz_score2
+    dunn, davies_bouldin_score2, silhouette_score2, calinski_harabaz_score2,
+    cop
 )
 
 
 class ValidClust:
 
     def __init__(self, data, n_clusters=[2, 3, 4, 5],
-                 indices=['silhouette', 'calinski', 'davies', 'dunn'],
+                 indices=['silhouette', 'calinski', 'davies', 'dunn', 'cop'],
                  methods=['hierarchical', 'kmeans'],
                  linkage='ward', metric='euclidean'):
 
@@ -58,7 +59,8 @@ class ValidClust:
             'davies': lambda data, dist, labels: davies_bouldin_score2(
                 data, dist, labels
             ),
-            'dunn': lambda data, dist, labels: dunn(data, dist, labels)
+            'dunn': lambda data, dist, labels: dunn(data, dist, labels),
+            'cop': lambda data, dist, labels: cop(data, dist, labels)
         }
         return {i: _index_switcher[i] for i in self.indices}
 
