@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.cluster import AgglomerativeClustering, KMeans, SpectralClustering
 from sklearn.metrics import pairwise_distances
+from sklearn.preprocessing import normalize
 
 from .indices import (
     dunn, davies_bouldin_score2, silhouette_score2, calinski_harabaz_score2,
@@ -44,6 +45,7 @@ class ValidClust:
         self.metric = metric
 
         self.score_df = None
+        self.score_df_norm = None
 
     def _get_method_objs(self):
         method_switcher = {
@@ -105,3 +107,10 @@ class ValidClust:
         self.score_df = output_df
 
         return self
+
+    def normalize(self):
+        self.score_df_norm = self.score_df.copy()
+        normalize(self.score_df_norm, copy=False)
+        if 'davies' in self.indices:
+            self.score_df_norm.loc[(slice(None), 'davies'), :] = \
+                1 - self.score_df_norm.loc[(slice(None), 'davies'), :]

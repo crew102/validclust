@@ -32,6 +32,15 @@ def test_basic_run():
 def test_index_aliases():
     vclust = ValidClust(data, indices=['sil', 'cal', 'dav'])
     assert ['silhouette', 'calinski', 'davies'] == vclust.indices
+
+
+def test_normalize():
+    vclust = ValidClust(data)
+    vclust.validate()
+    vclust.normalize()
+    assert all(vclust.score_df_norm.apply(lambda col: all(col < 1)))
+
+
 def test_dunn():
     kmeans = KMeans(n_clusters=2, random_state=0)
     labels = kmeans.fit_predict(iris)
