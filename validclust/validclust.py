@@ -26,6 +26,12 @@ class ValidClust:
                 "ward linkage type"
             )
 
+        ok_indices = ['silhouette', 'calinski', 'davies', 'dunn', 'cop']
+        ind_aliases = {i[0:3]: i for i in ok_indices}
+        indices = [
+            ind_aliases[i] if i in ind_aliases else i
+            for i in indices
+        ]
         self.data = data
         self.n_clusters = n_clusters
         self.indices = indices

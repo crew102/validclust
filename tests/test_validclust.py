@@ -29,6 +29,9 @@ def test_basic_run():
     assert np.allclose(actl, ser)
 
 
+def test_index_aliases():
+    vclust = ValidClust(data, indices=['sil', 'cal', 'dav'])
+    assert ['silhouette', 'calinski', 'davies'] == vclust.indices
 def test_dunn():
     kmeans = KMeans(n_clusters=2, random_state=0)
     labels = kmeans.fit_predict(iris)
