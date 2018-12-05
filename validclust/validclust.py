@@ -32,6 +32,10 @@ class ValidClust:
             ind_aliases[i] if i in ind_aliases else i
             for i in indices
         ]
+        for i in indices:
+            if i not in ok_indices:
+                raise ValueError('{0} is not a valid index metric'.format(i))
+
         self.data = data
         self.n_clusters = n_clusters
         self.indices = indices
