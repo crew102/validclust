@@ -36,12 +36,12 @@ class ValidClust:
         self.score_df = None
 
     def _get_method_objs(self):
-        _method_switcher = {
+        method_switcher = {
             'hierarchical': AgglomerativeClustering(),
             'kmeans': KMeans(),
             'spectral': SpectralClustering()
         }
-        objs = {i: _method_switcher[i] for i in self.methods}
+        objs = {i: method_switcher[i] for i in self.methods}
         for key, value in objs.items():
             if key == 'hierarchical':
                 affinity = 'euclidean' if self.linkage == 'ward' else 'precomputed'
@@ -49,14 +49,14 @@ class ValidClust:
         return objs
 
     def _get_index_funs(self):
-        _index_switcher = {
+        index_fun_switcher = {
             'silhouette': silhouette_score2,
             'calinski': calinski_harabaz_score2,
             'davies': davies_bouldin_score2,
             'dunn': dunn,
             'cop': cop
         }
-        return {i: _index_switcher[i] for i in self.indices}
+        return {i: index_fun_switcher[i] for i in self.indices}
 
     def validate(self):
         method_objs = self._get_method_objs()
