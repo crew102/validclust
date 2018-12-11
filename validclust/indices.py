@@ -11,7 +11,7 @@ def _get_clust_pairs(clusters):
     return [(i, j) for i in clusters for j in clusters if i > j]
 
 
-def dunn(data, dist, labels):
+def dunn(data=None, dist=None, labels=None):
     clusters = set(labels)
     inter_dists = [
         dist[np.ix_(labels == i, labels == j)].min()
@@ -24,21 +24,21 @@ def dunn(data, dist, labels):
     return min(inter_dists) / max(intra_dists)
 
 
-def silhouette_score2(data, dist, labels):
+def silhouette_score2(data=None, dist=None, labels=None):
     return silhouette_score(dist, labels, 'precomputed')
 
 
-def davies_bouldin_score2(data, dist, labels):
+def davies_bouldin_score2(data=None, dist=None, labels=None):
     with warnings.catch_warnings():
         warnings.filterwarnings('ignore', 'divide by zero')
         return davies_bouldin_score(data, labels)
 
 
-def calinski_harabaz_score2(data, dist, labels):
+def calinski_harabaz_score2(data=None, dist=None, labels=None):
     return calinski_harabaz_score(data, labels)
 
 
-def cop(data, dist, labels):
+def cop(data=None, dist=None, labels=None):
     clusters = set(labels)
     cpairs = _get_clust_pairs(clusters)
     prox_lst = [
