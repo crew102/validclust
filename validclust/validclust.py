@@ -45,7 +45,6 @@ class ValidClust:
         self.metric = metric
 
         self.score_df = None
-        self.score_df_norm = None
 
     def _get_method_objs(self):
         method_switcher = {
@@ -108,9 +107,10 @@ class ValidClust:
 
         return self
 
-    def normalize(self):
-        self.score_df_norm = self.score_df.copy()
-        normalize(self.score_df_norm, norm='max', copy=False)
+    def _normalize(self):
+        score_df_norm = self.score_df.copy()
+        normalize(score_df_norm, norm='max', copy=False)
         if 'davies' in self.indices:
-            self.score_df_norm.loc[(slice(None), 'davies'), :] = \
-                1 - self.score_df_norm.loc[(slice(None), 'davies'), :]
+            score_df_norm.loc[(slice(None), 'davies'), :] = \
+                1 - score_df_norm.loc[(slice(None), 'davies'), :]
+        return score_df_norm
