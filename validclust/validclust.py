@@ -1,5 +1,8 @@
 import pandas as pd
 import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
 from sklearn.cluster import AgglomerativeClustering, KMeans, SpectralClustering
 from sklearn.metrics import pairwise_distances
 from sklearn.preprocessing import normalize
@@ -114,3 +117,15 @@ class ValidClust:
             score_df_norm.loc[(slice(None), 'davies'), :] = \
                 1 - score_df_norm.loc[(slice(None), 'davies'), :]
         return score_df_norm
+
+
+    def plot(self):
+        norm_df = self._normalize()
+
+        yticklabels = [',\n'.join(i) for i in norm_df.index.values]
+        hmap = sns.heatmap(
+            norm_df, cmap='Blues', cbar=False, yticklabels=yticklabels
+        )
+        hmap.set_xlabel('\nNumber of clusters')
+        hmap.set_ylabel('Method, index\n')
+        plt.tight_layout()

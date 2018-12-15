@@ -15,7 +15,9 @@ setup(
     author_email='chriscrewbaker@gmail.com',
     license='LICENSE.txt',
     packages=['validclust'],
-    install_requires=['scikit-learn', 'pandas', 'numpy'],
+    install_requires=[
+        'scikit-learn', 'pandas', 'numpy', 'seaborn', 'matplotlib'
+    ],
     tests_require=['pytest'],
     setup_requires=["pytest-runner"]
 )
