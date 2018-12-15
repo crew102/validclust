@@ -37,8 +37,8 @@ def test_index_aliases():
 def test_normalize():
     vclust = ValidClust(data)
     vclust.validate()
-    vclust.normalize()
-    assert all(vclust.score_df_norm.apply(lambda col: all(col < 1)))
+    df = vclust._normalize()
+    assert all(df.apply(lambda col: all(col < 1)))
 
 
 def test_dunn():
