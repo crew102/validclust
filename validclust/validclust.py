@@ -110,7 +110,7 @@ class ValidClust:
 
     def normalize(self):
         self.score_df_norm = self.score_df.copy()
-        normalize(self.score_df_norm, copy=False)
+        normalize(self.score_df_norm, norm='max', copy=False)
         if 'davies' in self.indices:
             self.score_df_norm.loc[(slice(None), 'davies'), :] = \
                 1 - self.score_df_norm.loc[(slice(None), 'davies'), :]
