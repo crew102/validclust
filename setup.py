@@ -1,5 +1,15 @@
-from os import path
+import sys
 from setuptools import setup
+from os import path
+
+install_requires = ['scikit-learn', 'pandas', 'numpy', 'seaborn', 'matplotlib']
+
+is_v2 = sys.version_info[0] == 2
+is_low_v3 = sys.version_info[0] == 3 and sys.version_info[1] <= 4
+
+if is_v2 or is_low_v3:
+    install_requires.remove('matplotlib')
+    install_requires.append('matplotlib<3')
 
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md')) as f:
@@ -15,9 +25,7 @@ setup(
     author_email='chriscrewbaker@gmail.com',
     license='LICENSE.txt',
     packages=['validclust'],
-    install_requires=[
-        'scikit-learn', 'pandas', 'numpy', 'seaborn', 'matplotlib'
-    ],
+    install_requires=install_requires,
     tests_require=['pytest'],
     setup_requires=["pytest-runner"]
 )
