@@ -59,4 +59,3 @@ def davies_bouldin_score2(data=None, dist=None, labels=None):
 
 def calinski_harabaz_score2(data=None, dist=None, labels=None):
     return calinski_harabaz_score(data, labels)
-
