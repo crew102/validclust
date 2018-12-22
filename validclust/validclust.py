@@ -1,3 +1,5 @@
+import re
+
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -47,6 +49,15 @@ class ValidClust:
         self.metric = metric
 
         self.score_df = None
+
+    def __repr__(self):
+        argspec = [
+            '{}={}'.format('  ' + key, value)
+            for key, value in self.__dict__.items() if key != 'score_df'
+        ]
+        argspec = ',\n'.join(argspec)
+        argspec = re.sub('(linkage|metric)=(\w*)', "\\1='\\2'", argspec)
+        return 'ValidClust(\n' + argspec + '\n)'
 
     def _get_method_objs(self):
         method_switcher = {
