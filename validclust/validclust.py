@@ -15,7 +15,7 @@ from .indices import (
 
 class ValidClust:
 
-    def __init__(self, data, n_clusters=[2, 3, 4, 5],
+    def __init__(self, n_clusters=[2, 3, 4, 5],
                  indices=['silhouette', 'calinski', 'davies', 'dunn'],
                  methods=['hierarchical', 'kmeans'],
                  linkage='ward', metric='euclidean'):
@@ -40,7 +40,6 @@ class ValidClust:
             if i not in ok_indices:
                 raise ValueError('{0} is not a valid index metric'.format(i))
 
-        self.data = data
         self.n_clusters = n_clusters
         self.indices = indices
         self.methods = methods
@@ -72,14 +71,14 @@ class ValidClust:
         }
         return {i: index_fun_switcher[i] for i in self.indices}
 
-    def validate(self):
+    def validate(self, data):
         method_objs = self._get_method_objs()
         index_funs = self._get_index_funs()
         dist_inds = ['silhouette', 'dunn']
 
         d_overlap = [i for i in self.indices if i in dist_inds]
         if d_overlap or 'hierarchical' in self.methods:
-            dist = pairwise_distances(self.data)
+            dist = pairwise_distances(data)
         else:
             dist = None
 
@@ -97,11 +96,11 @@ class ValidClust:
                 if alg_name == 'hierarchical' and self.linkage != 'ward':
                     labels = alg_obj.fit_predict(dist)
                 else:
-                    labels = alg_obj.fit_predict(self.data)
+                    labels = alg_obj.fit_predict(data)
                 # have to iterate over self.indices here so that ordering of
                 # validity indices is same in scores list as it is in output_df
                 scores = [
-                    index_funs[key](self.data, dist, labels)
+                    index_funs[key](data, dist, labels)
                     for key in self.indices
                 ]
                 output_df.loc[(alg_name, self.indices), k] = scores
