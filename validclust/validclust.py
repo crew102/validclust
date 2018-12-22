@@ -118,7 +118,6 @@ class ValidClust:
                 1 - score_df_norm.loc[(slice(None), 'davies'), :]
         return score_df_norm
 
-
     def plot(self):
         norm_df = self._normalize()
 
