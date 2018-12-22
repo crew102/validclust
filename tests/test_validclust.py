@@ -38,7 +38,7 @@ def test_normalize():
     vclust = ValidClust(data)
     vclust.validate()
     df = vclust._normalize()
-    assert all(df.apply(lambda col: all(col < 1)))
+    assert all(df.apply(lambda col: all(col <= 1)))
 
 
 def test_dunn():
