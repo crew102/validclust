@@ -11,13 +11,16 @@ if is_v2 or is_low_v3:
     install_requires.remove('matplotlib')
     install_requires.append('matplotlib<3')
 
+if is_v2:
+    install_requires.append('scipy<1.2')
+
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md')) as f:
     long_description = f.read()
 
 setup(
     name='validclust',
-    version='0.0.9000',
+    version='0.0.0.9000',
     description='Validate clustering results',
     long_description=long_description,
     long_description_content_type='text/markdown',
