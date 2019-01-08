@@ -11,7 +11,7 @@ def _get_clust_pairs(clusters):
     return [(i, j) for i in clusters for j in clusters if i > j]
 
 
-def dunn(data=None, dist=None, labels=None):
+def _dunn(data=None, dist=None, labels=None):
     clusters = set(labels)
     inter_dists = [
         dist[np.ix_(labels == i, labels == j)].min()
@@ -22,6 +22,10 @@ def dunn(data=None, dist=None, labels=None):
         for i in clusters
     ]
     return min(inter_dists) / max(intra_dists)
+
+
+def dunn(dist, labels):
+    return _dunn(data=None, dist=dist, labels=labels)
 
 
 def cop(data=None, dist=None, labels=None):
@@ -47,15 +51,15 @@ def cop(data=None, dist=None, labels=None):
     return sum(out_l) / len(labels)
 
 
-def silhouette_score2(data=None, dist=None, labels=None):
+def _silhouette_score2(data=None, dist=None, labels=None):
     return silhouette_score(dist, labels, 'precomputed')
 
 
-def davies_bouldin_score2(data=None, dist=None, labels=None):
+def _davies_bouldin_score2(data=None, dist=None, labels=None):
     with warnings.catch_warnings():
         warnings.filterwarnings('ignore', 'divide by zero')
         return davies_bouldin_score(data, labels)
 
 
-def calinski_harabaz_score2(data=None, dist=None, labels=None):
+def _calinski_harabaz_score2(data=None, dist=None, labels=None):
     return calinski_harabaz_score(data, labels)

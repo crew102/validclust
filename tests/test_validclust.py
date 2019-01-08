@@ -44,6 +44,6 @@ def test_normalize():
 def test_dunn():
     kmeans = KMeans(n_clusters=2, random_state=0)
     labels = kmeans.fit_predict(iris)
-    d_val = dunn(iris, pairwise_distances(iris), labels)
+    d_val = dunn(pairwise_distances(iris), labels)
     assert .05 < d_val < .1
 

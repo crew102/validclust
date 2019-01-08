@@ -10,8 +10,8 @@ from sklearn.metrics import pairwise_distances
 from sklearn.preprocessing import normalize
 
 from .indices import (
-    dunn, davies_bouldin_score2, silhouette_score2, calinski_harabaz_score2,
-    cop
+    _dunn, cop, _davies_bouldin_score2, _silhouette_score2,
+    _calinski_harabaz_score2
 )
 
 
@@ -74,10 +74,10 @@ class ValidClust:
 
     def _get_index_funs(self):
         index_fun_switcher = {
-            'silhouette': silhouette_score2,
-            'calinski': calinski_harabaz_score2,
-            'davies': davies_bouldin_score2,
-            'dunn': dunn,
+            'silhouette': _silhouette_score2,
+            'calinski': _calinski_harabaz_score2,
+            'davies': _davies_bouldin_score2,
+            'dunn': _dunn,
             'cop': cop
         }
         return {i: index_fun_switcher[i] for i in self.indices}
