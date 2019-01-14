@@ -82,7 +82,7 @@ class ValidClust:
         }
         return {i: index_fun_switcher[i] for i in self.indices}
 
-    def validate(self, data):
+    def fit(self, data):
         method_objs = self._get_method_objs()
         index_funs = self._get_index_funs()
         dist_inds = ['silhouette', 'dunn']
@@ -117,8 +117,10 @@ class ValidClust:
                 output_df.loc[(alg_name, self.indices), k] = scores
 
         self.score_df = output_df
-
         return self
+
+    def fit_predict(self, data):
+        return self.fit(data).score_df
 
     def _normalize(self):
         score_df_norm = self.score_df.copy()
