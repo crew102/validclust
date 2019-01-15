@@ -17,8 +17,8 @@ iris = load_iris()['data']
 
 def test_basic_run():
     vclust = ValidClust()
-    vclust.validate(data)
-    ser = vclust.score_df.loc[('hierarchical', ['silhouette', 'calinski']), 2]
+    score_df = vclust.fit_predict(data)
+    ser = score_df.loc[('hierarchical', ['silhouette', 'calinski']), 2]
 
     aclust = AgglomerativeClustering(n_clusters=2)
     y = aclust.fit_predict(data)
@@ -36,7 +36,7 @@ def test_index_aliases():
 
 def test_normalize():
     vclust = ValidClust()
-    vclust.validate(data)
+    vclust.fit(data)
     df = vclust._normalize()
     assert all(df.apply(lambda col: all(col <= 1)))
 
