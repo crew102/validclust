@@ -28,7 +28,7 @@ def dunn(dist, labels):
     return _dunn(data=None, dist=dist, labels=labels)
 
 
-def cop(data=None, dist=None, labels=None):
+def cop(data, dist, labels):
     clusters = set(labels)
     cpairs = _get_clust_pairs(clusters)
     prox_lst = [
