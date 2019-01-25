@@ -67,8 +67,7 @@ class ValidClust:
         objs = {i: method_switcher[i] for i in self.methods}
         for key, value in objs.items():
             if key == 'hierarchical':
-                affinity = 'euclidean' if self.linkage == 'ward' else 'precomputed'
-                value.set_params(linkage=self.linkage, affinity=affinity)
+                value.set_params(linkage=self.linkage, affinity=self.metric)
         return objs
 
     def _get_index_funs(self):
@@ -87,10 +86,7 @@ class ValidClust:
         dist_inds = ['silhouette', 'dunn']
 
         d_overlap = [i for i in self.indices if i in dist_inds]
-        if d_overlap or 'hierarchical' in self.methods:
-            dist = pairwise_distances(data)
-        else:
-            dist = None
+        dist = pairwise_distances(data) if d_overlap else None
 
         index = pd.MultiIndex.from_product(
             [self.methods, self.indices],
@@ -103,10 +99,7 @@ class ValidClust:
         for k in self.n_clusters:
             for alg_name, alg_obj in method_objs.items():
                 alg_obj.set_params(n_clusters=k)
-                if alg_name == 'hierarchical' and self.linkage != 'ward':
-                    labels = alg_obj.fit_predict(dist)
-                else:
-                    labels = alg_obj.fit_predict(data)
+                labels = alg_obj.fit_predict(data)
                 # have to iterate over self.indices here so that ordering of
                 # validity indices is same in scores list as it is in output_df
                 scores = [
