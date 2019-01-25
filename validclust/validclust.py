@@ -40,7 +40,7 @@ class ValidClust:
         ]
         for i in indices:
             if i not in ok_indices:
-                raise ValueError('{0} is not a valid index affinity'.format(i))
+                raise ValueError('{0} is not a valid index value'.format(i))
 
         self.n_clusters = n_clusters
         self.indices = indices
