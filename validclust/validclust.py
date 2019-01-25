@@ -22,9 +22,10 @@ class ValidClust:
                  methods=['hierarchical', 'kmeans'],
                  linkage='ward', affinity='euclidean'):
 
-        for i in ['n_clusters', 'indices', 'methods']:
-            if type(locals()[i]) is not list:
-                raise ValueError('{0} must be a list'.format(i))
+        n_clusters, indices, methods = (
+            [i] if type(i) in [int, str] else i
+            for i in [n_clusters, indices, methods]
+        )
 
         if linkage == 'ward' and affinity != 'euclidean':
             raise ValueError(
