@@ -62,8 +62,7 @@ class ValidClust:
     def _get_method_objs(self):
         method_switcher = {
             'hierarchical': AgglomerativeClustering(),
-            'kmeans': KMeans(),
-            'spectral': SpectralClustering()
+            'kmeans': KMeans()
         }
         objs = {i: method_switcher[i] for i in self.methods}
         for key, value in objs.items():
