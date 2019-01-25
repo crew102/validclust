@@ -20,15 +20,15 @@ class ValidClust:
     def __init__(self, n_clusters,
                  indices=['silhouette', 'calinski', 'davies', 'dunn'],
                  methods=['hierarchical', 'kmeans'],
-                 linkage='ward', metric='euclidean'):
+                 linkage='ward', affinity='euclidean'):
 
         for i in ['n_clusters', 'indices', 'methods']:
             if type(locals()[i]) is not list:
                 raise ValueError('{0} must be a list'.format(i))
 
-        if linkage == 'ward' and metric != 'euclidean':
+        if linkage == 'ward' and affinity != 'euclidean':
             raise ValueError(
-                "You must specify `metric='euclidean'` if you use choose the "
+                "You must specify `affinity='euclidean'` when using the "
                 "ward linkage type"
             )
 
@@ -40,13 +40,13 @@ class ValidClust:
         ]
         for i in indices:
             if i not in ok_indices:
-                raise ValueError('{0} is not a valid index metric'.format(i))
+                raise ValueError('{0} is not a valid index affinity'.format(i))
 
         self.n_clusters = n_clusters
         self.indices = indices
         self.methods = methods
         self.linkage = linkage
-        self.metric = metric
+        self.affinity = affinity
 
         self.score_df = None
 
@@ -56,7 +56,7 @@ class ValidClust:
             for key, value in self.__dict__.items() if key != 'score_df'
         ]
         argspec = ',\n'.join(argspec)
-        argspec = re.sub('(linkage|metric)=(\w*)', "\\1='\\2'", argspec)
+        argspec = re.sub('(linkage|affinity)=(\w*)', "\\1='\\2'", argspec)
         return 'ValidClust(\n' + argspec + '\n)'
 
     def _get_method_objs(self):
@@ -67,7 +67,7 @@ class ValidClust:
         objs = {i: method_switcher[i] for i in self.methods}
         for key, value in objs.items():
             if key == 'hierarchical':
-                value.set_params(linkage=self.linkage, affinity=self.metric)
+                value.set_params(linkage=self.linkage, affinity=self.affinity)
         return objs
 
     def _get_index_funs(self):
