@@ -17,7 +17,7 @@ from .indices import (
 
 class ValidClust:
 
-    def __init__(self, n_clusters=[2, 3, 4, 5],
+    def __init__(self, n_clusters,
                  indices=['silhouette', 'calinski', 'davies', 'dunn'],
                  methods=['hierarchical', 'kmeans'],
                  linkage='ward', metric='euclidean'):
