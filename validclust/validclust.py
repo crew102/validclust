@@ -17,14 +17,14 @@ from .indices import (
 
 class ValidClust:
 
-    def __init__(self, n_clusters,
+    def __init__(self, k,
                  indices=['silhouette', 'calinski', 'davies', 'dunn'],
                  methods=['hierarchical', 'kmeans'],
                  linkage='ward', affinity='euclidean'):
 
-        n_clusters, indices, methods = (
+        k, indices, methods = (
             [i] if type(i) in [int, str] else i
-            for i in [n_clusters, indices, methods]
+            for i in [k, indices, methods]
         )
 
         if linkage == 'ward' and affinity != 'euclidean':
@@ -43,7 +43,7 @@ class ValidClust:
             if i not in ok_indices:
                 raise ValueError('{0} is not a valid index value'.format(i))
 
-        self.n_clusters = n_clusters
+        self.k = k
         self.indices = indices
         self.methods = methods
         self.linkage = linkage
@@ -94,10 +94,10 @@ class ValidClust:
             names=['method', 'index']
         )
         output_df = pd.DataFrame(
-            index=index, columns=self.n_clusters, dtype=np.float64
+            index=index, columns=self.k, dtype=np.float64
         )
 
-        for k in self.n_clusters:
+        for k in self.k:
             for alg_name, alg_obj in method_objs.items():
                 alg_obj.set_params(n_clusters=k)
                 labels = alg_obj.fit_predict(data)
