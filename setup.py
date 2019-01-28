@@ -27,8 +27,8 @@ setup(
     author='Christopher Baker',
     author_email='chriscrewbaker@gmail.com',
     license='LICENSE.txt',
-    packages=['validclust'],
+    packages='validclust',
     install_requires=install_requires,
-    tests_require=['pytest'],
-    setup_requires=["pytest-runner"]
+    tests_require='pytest',
+    setup_requires='pytest-runner'
 )
