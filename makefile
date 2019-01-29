@@ -1,6 +1,9 @@
 docs:
 	cd docs && sphinx-build source build
 
+clean:
+	- rm -rf docs/build
+
 dist:
 	- rm dist/*
 	python setup.py sdist bdist_wheel
@@ -11,4 +14,4 @@ upload-test:
 upload:
 	twine upload dist/*
 
-.PHONY: docs dist upload-test upload
+.PHONY: docs dist upload-test upload clean

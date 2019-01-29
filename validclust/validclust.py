@@ -16,7 +16,35 @@ from .indices import (
 
 
 class ValidClust:
+    """Validate clustering results
 
+    Parameters
+    ----------
+    k : int or list of int
+        The number of clusters to partition your data into.
+    indices : str or list of str, optional
+        The cluster validity indices to calculate. Acceptable values include
+        'silhouette', 'calinski', 'davies', 'dunn', and 'cop'. You can use
+        a three-character abbreviation for these values as well. For example,
+        you could specify ``indices=['cal', 'dav', 'dun']``.
+    methods : str or list of str, optional
+        The clustering algorithm(s) to use. Acceptable values are
+        'hierarchical' and 'kmeans'.
+    linkage : {'ward', 'complete', 'average', 'single'}, optional
+        Which linkage criterion to use for hierarchical clustering. See the
+        `sklean docs <https://scikit-learn.org/stable/modules/generated/sklearn.cluster.AgglomerativeClustering.html#sklearn.cluster.AgglomerativeClustering>`_
+        for more details.
+    affinity : {'euclidean', 'l1', 'l2', 'manhattan', 'cosine'}, optional
+        The metric used to compute the linkage for hierarchical clustering.
+        Note, you must specify ``affinity='euclidean'`` when
+        ``linkage='ward'``. See the sklearn docs linked above for more details.
+
+    Attributes
+    ----------
+    score_df : DataFrame
+        A Pandas DataFrame with the computed cluster validity index values.
+
+    """
     def __init__(self, k,
                  indices=['silhouette', 'calinski', 'davies', 'dunn'],
                  methods=['hierarchical', 'kmeans'],
@@ -82,6 +110,19 @@ class ValidClust:
         return {i: index_fun_switcher[i] for i in self.indices}
 
     def fit(self, data):
+        """Fit the clustering algorithm(s) to the data and calculate CVI scores
+
+        Parameters
+        ----------
+        data : array-like, shape = [n_samples, n_features]
+            The data to cluster.
+
+        Returns
+        -------
+        self
+            A ``ValidClust`` object whose ``score_df`` attribute contains the
+            calculated CVI scores.
+        """
         method_objs = self._get_method_objs()
         index_funs = self._get_index_funs()
         dist_inds = ['silhouette', 'dunn']
@@ -113,6 +154,19 @@ class ValidClust:
         return self
 
     def fit_predict(self, data):
+        """Fit the clustering algorithm(s) to the data and calculate CVI scores
+
+        Parameters
+        ----------
+        data : array-like, shape = [n_samples, n_features]
+            The data to cluster.
+
+        Returns
+        -------
+        DataFrame
+            A Pandas DataFrame with the computed cluster validity index values
+            (AKA ``self.score_df``).
+        """
         return self.fit(data).score_df
 
     def _normalize(self):
@@ -125,6 +179,12 @@ class ValidClust:
         return score_df_norm
 
     def plot(self):
+        """Plot normalized CVI scores in a heatmap
+
+        Returns
+        -------
+        None
+        """
         norm_df = self._normalize()
 
         yticklabels = [',\n'.join(i) for i in norm_df.index.values]

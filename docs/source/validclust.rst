@@ -19,12 +19,3 @@ validclust.validclust module
     :members:
     :undoc-members:
     :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: validclust
-    :members:
-    :undoc-members:
-    :show-inheritance:

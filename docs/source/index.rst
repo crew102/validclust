@@ -1,20 +1,17 @@
-.. validclust documentation master file, created by
-   sphinx-quickstart on Tue Jan  1 21:02:26 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+validclust
+====================================
 
-Welcome to validclust's documentation!
-======================================
+.. mdinclude:: ../../README.md
+   :start-line: 2
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+.. mdinclude:: cvi-funs.md
 
+Reference
+------------------------------------
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+* :ref:`Modules <modindex>`
+* :ref:`Full index <genindex>`
