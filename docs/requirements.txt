@@ -1,2 +1,3 @@
 m2r==0.2.0
 enum
+sphinx_rtd_theme
