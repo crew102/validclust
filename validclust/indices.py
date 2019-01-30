@@ -25,10 +25,82 @@ def _dunn(data=None, dist=None, labels=None):
 
 
 def dunn(dist, labels):
+    r"""Calculate the Dunn CVI
+
+    See Dunn (2008) for details on how the index is calculated. [2]_
+
+    Parameters
+    ----------
+    dist : array-like, shape = [n_samples, n_samples]
+        A distance matrix containing the distances between each observation.
+    labels : array [n_samples]
+        The cluster labels for each observation.
+
+    Returns
+    -------
+    float
+        The Dunn index.
+
+    References
+    ----------
+    .. [2] Dunn, J. C. (1973). Well-Separated Clusters and Optimal Fuzzy
+       Partitions. Journal of Cybernetics, 4(1), 95-104. DOI:
+       10.1080/01969727408546059.
+
+    Examples
+    --------
+    >>> from sklearn.cluster import k_means
+    >>> from sklearn.metrics import pairwise_distances
+    >>> from sklearn.datasets import load_iris
+    >>> from validclust import dunn
+    >>> data = load_iris()['data']
+    >>> _, labels, _ = k_means(data, n_clusters=3)
+    >>> dist = pairwise_distances(data)
+    >>> dunn(dist, labels)
+    0.09880739332808611
+    """
     return _dunn(data=None, dist=dist, labels=labels)
 
 
 def cop(data, dist, labels):
+    r"""Calculate the COP CVI
+
+    See Gurrutxaga et al. (2010) for details on how the index is calculated. [1]_
+
+    Parameters
+    ----------
+    data : array-like, shape = [n_samples, n_features]
+        The data to cluster.
+    dist : array-like, shape = [n_samples, n_samples]
+        A distance matrix containing the distances between each observation.
+    labels : array [n_samples]
+        The cluster labels for each observation.
+
+    Returns
+    -------
+    float
+        The COP index.
+
+    References
+    ----------
+    .. [1] Gurrutxaga, I., Albisua, I., Arbelaitz, O., Martín, J., Muguerza,
+       J., Pérez, J., Perona, I. (2010). SEP/COP: An efficient method to find
+       the best partition in hierarchical clustering based on a new cluster
+       validity index. Pattern Recognition, 43(10), 3364-3373. DOI:
+       10.1016/j.patcog.2010.04.021.
+
+    Examples
+    --------
+    >>> from sklearn.cluster import k_means
+    >>> from sklearn.metrics import pairwise_distances
+    >>> from sklearn.datasets import load_iris
+    >>> from validclust import cop
+    >>> data = load_iris()['data']
+    >>> _, labels, _ = k_means(data, n_clusters=3)
+    >>> dist = pairwise_distances(data)
+    >>> cop(data, dist, labels)
+    0.133689170400615
+    """
     clusters = set(labels)
     cpairs = _get_clust_pairs(clusters)
     prox_lst = [
