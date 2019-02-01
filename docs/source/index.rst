@@ -8,8 +8,6 @@ validclust
    :maxdepth: 2
    :caption: Contents:
 
-.. mdinclude:: cvi-funs.md
-
 Reference
 ------------------------------------
 
