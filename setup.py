@@ -26,6 +26,7 @@ setup(
     long_description_content_type='text/markdown',
     author='Christopher Baker',
     author_email='chriscrewbaker@gmail.com',
+    url='https://validclust.readthedocs.io',
     license='LICENSE.txt',
     packages=['validclust'],
     install_requires=install_requires,
