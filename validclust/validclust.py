@@ -43,7 +43,6 @@ class ValidClust:
     ----------
     score_df : DataFrame
         A Pandas DataFrame with the computed cluster validity index values.
-
     """
     def __init__(self, k,
                  indices=['silhouette', 'calinski', 'davies', 'dunn'],
@@ -110,7 +109,8 @@ class ValidClust:
         return {i: index_fun_switcher[i] for i in self.indices}
 
     def fit(self, data):
-        """Fit the clustering algorithm(s) to the data and calculate CVI scores
+        """Fit the clustering algorithm(s) to the data and calculate the CVI
+        scores
 
         Parameters
         ----------
@@ -154,7 +154,8 @@ class ValidClust:
         return self
 
     def fit_predict(self, data):
-        """Fit the clustering algorithm(s) to the data and calculate CVI scores
+        """Fit the clustering algorithm(s) to the data and calculate the CVI
+        scores
 
         Parameters
         ----------
@@ -165,7 +166,7 @@ class ValidClust:
         -------
         DataFrame
             A Pandas DataFrame with the computed cluster validity index values
-            (AKA ``self.score_df``).
+            (``self.score_df``).
         """
         return self.fit(data).score_df
 
@@ -181,9 +182,19 @@ class ValidClust:
     def plot(self):
         """Plot normalized CVI scores in a heatmap
 
+        The CVI scores are normalized along each method/index pair using the
+        `max norm <https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.normalize.html>`_.
+        Note that, because the scores are normalized along each method/index
+        pair, you should compare the colors of the cells in the heatmap only
+        within a given row. You should not, for instance, compare the color of
+        the cells in the "kmeans, dunn" row with those in the
+        "kmeans, silhouette" row.
+
         Returns
         -------
         None
+            Nothing is returned. Instead, a plot is rendered using a
+            graphics backend.
         """
         norm_df = self._normalize()
 

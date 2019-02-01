@@ -7,7 +7,7 @@
 
 ## Motivation
 
-Clustering algorithms often require that the analyst specify the number of clusters that exist in the data, a parameter commonly known as `k`. One approach to determining an appropriate value for `k` is to cluster the data using a range of values for `k`, then evaluate the quality of the clusterings using a cluster validity index (CVI). The value of `k` that results in the best partitioning of the data according to the CVI is then chosen. `validclust` handles this process for the analyst, making it very easy to quickly determine an optimal value for `k`.  
+Clustering algorithms often require that the analyst specify the number of clusters that exist in the data, a parameter commonly known as `k`. One approach to determining an appropriate value for `k` is to cluster the data using a range of values for `k`, then evaluate the quality of the resulting clusterings using a cluster validity index (CVI). The value of `k` that results in the best partitioning of the data according to the CVI is then chosen. `validclust` handles this process for the analyst, making it very easy to quickly determine an optimal value for `k`.  
 
 ## Installation
 
@@ -71,7 +71,7 @@ print(cvi_vals)
 #>              dunn           0.098636     0.072423  
 ```
 
-It's hard to see what the optimal value of `k` is from the raw CVI values shown above. Not all of the CVIs are on a 0-1 scale, and lower scores are actually associated with better clusterings for some of the indices (e.g., Davis and COP). `ValidClust`'s `plot()` method solves this problem by normalizing the CVIs and then displaying the results in a heatmap.
+It's hard to see what the optimal value of `k` is from the raw CVI values shown above. Not all of the CVIs are on a 0-1 scale, and lower scores are actually associated with better clusterings for some of the indices. `ValidClust`'s `plot()` method solves this problem by first normalizing the CVIs and then displaying the results in a heatmap.
 
 ```python
 vclust.plot()
@@ -79,4 +79,4 @@ vclust.plot()
 
 ![](https://i.imgur.com/lh4lROu.png)
 
-For each row in the above grid (i.e., for each clustering method/CVI pairing), darker cells are associated with higher-quality clusterings. From this plot we can see that each of the method/index pairings indicate that 4 is the optimal value for `k`.
+For each row in the above grid (i.e., for each clustering method/CVI pair), darker cells are associated with higher-quality clusterings. From this plot we can see that each method/index pair seems to be pointing to 4 as being an optimal value for `k`.
