@@ -20,7 +20,7 @@ with open(path.join(this_directory, 'README.md')) as f:
 
 setup(
     name='validclust',
-    version='0.0.0.9000',
+    version='0.1.0',
     description='Validate clustering results',
     long_description=long_description,
     long_description_content_type='text/markdown',
