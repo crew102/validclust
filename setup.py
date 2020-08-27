@@ -2,7 +2,9 @@ import sys
 from setuptools import setup
 from os import path
 
-install_requires = ['scikit-learn', 'pandas', 'numpy', 'seaborn', 'matplotlib']
+install_requires = [
+    'scikit-learn', 'pandas', 'numpy', 'seaborn', 'matplotlib', 'packaging'
+]
 
 is_v2 = sys.version_info[0] == 2
 is_low_v3 = sys.version_info[0] == 3 and sys.version_info[1] <= 4
@@ -20,7 +22,7 @@ with open(path.join(this_directory, 'README.md')) as f:
 
 setup(
     name='validclust',
-    version='0.1.0',
+    version='0.1.1',
     description='Validate clustering results',
     long_description=long_description,
     long_description_content_type='text/markdown',

@@ -3,10 +3,20 @@
 import warnings
 
 import numpy as np
+import sklearn
+from packaging import version
 from sklearn.metrics import (
-    davies_bouldin_score, silhouette_score, calinski_harabaz_score,
-    pairwise_distances
+    davies_bouldin_score, silhouette_score, pairwise_distances
 )
+
+# They changed the name of calinski_harabaz_score in later version of sklearn:
+# https://github.com/scikit-learn/scikit-learn/blob/c4733f4895c1becdf587b38970f6f7066656e3f9/doc/whats_new/v0.20.rst#id2012
+sklearn_version = version.parse(sklearn.__version__)
+nm_chg_ver = version.parse("0.23")
+if sklearn_version >= nm_chg_ver:
+    from sklearn.metrics import calinski_harabasz_score as cal_score
+else:
+    from sklearn.metrics import calinski_harabaz_score as cal_score
 
 
 def _get_clust_pairs(clusters):
@@ -136,4 +146,4 @@ def _davies_bouldin_score2(data=None, dist=None, labels=None):
 
 
 def _calinski_harabaz_score2(data=None, dist=None, labels=None):
-    return calinski_harabaz_score(data, labels)
+    return cal_score(data, labels)
