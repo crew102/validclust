@@ -2,22 +2,17 @@ import sys
 from setuptools import setup
 from os import path
 
-# We have to use seaborn <= 0.9.1 b/c that was the last version that supported
-# Python 2.7
 install_requires = [
-    'scikit-learn', 'pandas', 'numpy', 'seaborn<=0.9.1', 'matplotlib',
+    'scikit-learn', 'pandas', 'numpy', 'seaborn', 'matplotlib',
     'packaging'
 ]
 
-is_v2 = sys.version_info[0] == 2
 is_low_v3 = sys.version_info[0] == 3 and sys.version_info[1] <= 5
 
-if is_v2 or is_low_v3:
+if is_low_v3:
     install_requires.remove('matplotlib')
     install_requires.append('matplotlib<3')
 
-if is_v2:
-    install_requires.append('scipy<1.2')
 
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md')) as f:
