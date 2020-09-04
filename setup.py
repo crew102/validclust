@@ -10,7 +10,7 @@ install_requires = [
 ]
 
 is_v2 = sys.version_info[0] == 2
-is_low_v3 = sys.version_info[0] == 3 and sys.version_info[1] <= 4
+is_low_v3 = sys.version_info[0] == 3 and sys.version_info[1] <= 5
 
 if is_v2 or is_low_v3:
     install_requires.remove('matplotlib')
