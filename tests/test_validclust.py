@@ -1,12 +1,19 @@
 import pytest
 import pandas as pd
+import sklearn
+from packaging import version
 import numpy as np
 from sklearn.datasets.samples_generator import make_blobs
 from sklearn.datasets import load_iris
 from sklearn.cluster import AgglomerativeClustering, KMeans
-from sklearn.metrics import (
-    silhouette_score, calinski_harabaz_score, pairwise_distances
-)
+from sklearn.metrics import silhouette_score, pairwise_distances
+
+sklearn_version = version.parse(sklearn.__version__)
+nm_chg_ver = version.parse("0.23")
+if sklearn_version >= nm_chg_ver:
+    from sklearn.metrics import calinski_harabasz_score as _cal_score
+else:
+    from sklearn.metrics import calinski_harabaz_score as _cal_score
 
 from validclust.validclust import ValidClust
 from validclust.indices import dunn
@@ -23,7 +30,7 @@ def test_basic_run():
     aclust = AgglomerativeClustering(n_clusters=2)
     y = aclust.fit_predict(data)
     actl = np.array(
-        [silhouette_score(data, y), calinski_harabaz_score(data, y)]
+        [silhouette_score(data, y), _cal_score(data, y)]
     )
 
     assert np.allclose(actl, ser)
