@@ -1,5 +1,3 @@
-import pytest
-import pandas as pd
 import sklearn
 from packaging import version
 import numpy as np
