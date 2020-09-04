@@ -12,6 +12,8 @@ is_low_v3 = sys.version_info[0] == 3 and sys.version_info[1] <= 5
 if is_low_v3:
     install_requires.remove('matplotlib')
     install_requires.append('matplotlib<3')
+    install_requires.remove('pandas')
+    install_requires.append('pandas<=0.24')
 
 
 this_directory = path.abspath(path.dirname(__file__))
