@@ -14,9 +14,9 @@ from sklearn.metrics import (
 sklearn_version = version.parse(sklearn.__version__)
 nm_chg_ver = version.parse("0.23")
 if sklearn_version >= nm_chg_ver:
-    from sklearn.metrics import calinski_harabasz_score as cal_score
+    from sklearn.metrics import calinski_harabasz_score as _cal_score
 else:
-    from sklearn.metrics import calinski_harabaz_score as cal_score
+    from sklearn.metrics import calinski_harabaz_score as _cal_score
 
 
 def _get_clust_pairs(clusters):
@@ -146,4 +146,4 @@ def _davies_bouldin_score2(data=None, dist=None, labels=None):
 
 
 def _calinski_harabaz_score2(data=None, dist=None, labels=None):
-    return cal_score(data, labels)
+    return _cal_score(data, labels)
