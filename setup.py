@@ -1,20 +1,5 @@
-import sys
 from setuptools import setup
 from os import path
-
-install_requires = [
-    'scikit-learn', 'pandas', 'numpy', 'seaborn', 'matplotlib',
-    'packaging'
-]
-
-is_low_v3 = sys.version_info[0] == 3 and sys.version_info[1] <= 5
-
-if is_low_v3:
-    install_requires.remove('matplotlib')
-    install_requires.append('matplotlib<3')
-    install_requires.remove('pandas')
-    install_requires.append('pandas<=0.24')
-
 
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md')) as f:
@@ -31,7 +16,14 @@ setup(
     url='https://validclust.readthedocs.io',
     license='LICENSE.txt',
     packages=['validclust'],
-    install_requires=install_requires,
+    install_requires=[
+        'scikit-learn',
+        'pandas',
+        'numpy',
+        'seaborn',
+        'matplotlib',
+        'packaging'
+    ],
     tests_require='pytest',
     setup_requires='pytest-runner'
 )
