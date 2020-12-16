@@ -1,5 +1,6 @@
 docs:
-	cd docs && sphinx-build source build
+	. venv/bin/activate; cd docs; sphinx-build source build; deactivate
+
 
 clean:
 	- rm -rf docs/build
