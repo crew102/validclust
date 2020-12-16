@@ -1,6 +1,8 @@
 docs:
 	. venv/bin/activate; cd docs; sphinx-build source build; deactivate
 
+test:
+	venv/bin/python setup.py test
 
 clean:
 	- rm -rf docs/build
@@ -15,4 +17,4 @@ upload-test:
 upload:
 	twine upload dist/*
 
-.PHONY: docs dist upload-test upload clean
+.PHONY: docs test clean dist upload-test upload
