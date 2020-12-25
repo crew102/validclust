@@ -1,7 +1,7 @@
 import sklearn
 from packaging import version
 import numpy as np
-from sklearn.datasets.samples_generator import make_blobs
+from sklearn.datasets import make_blobs
 from sklearn.datasets import load_iris
 from sklearn.cluster import AgglomerativeClustering, KMeans
 from sklearn.metrics import silhouette_score, pairwise_distances
