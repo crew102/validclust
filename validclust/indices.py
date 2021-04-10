@@ -136,7 +136,7 @@ def cop(data, dist, labels):
 
 
 def _silhouette_score2(data=None, dist=None, labels=None):
-    return silhouette_score(dist, labels, 'precomputed')
+    return silhouette_score(dist, labels, metric='precomputed')
 
 
 def _davies_bouldin_score2(data=None, dist=None, labels=None):
