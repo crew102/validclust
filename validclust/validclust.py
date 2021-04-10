@@ -84,7 +84,7 @@ class ValidClust:
             for key, value in self.__dict__.items() if key != 'score_df'
         ]
         argspec = ',\n'.join(argspec)
-        argspec = re.sub('(linkage|affinity)=(\w*)', "\\1='\\2'", argspec)
+        argspec = re.sub('(linkage|affinity)=(\\w*)', "\\1='\\2'", argspec)
         return 'ValidClust(\n' + argspec + '\n)'
 
     def _get_method_objs(self):
