@@ -1,5 +1,6 @@
 import sklearn
 from packaging import version
+import pandas as pd
 import numpy as np
 from sklearn.datasets import make_blobs
 from sklearn.datasets import load_iris
@@ -52,3 +53,11 @@ def test_dunn():
     d_val = dunn(pairwise_distances(iris), labels)
     assert .05 < d_val < .1
 
+
+def test_non_zero_diag_edge_case():
+    # https://github.com/crew102/validclust/issues/4
+    df = pd.DataFrame(2 + 3 * np.random.randn(1000, 43))
+    vclust = ValidClust(k=20, methods=['kmeans'])
+    v_out = vclust.fit_predict(df)
+    dev_null = v_out.head()
+    assert True

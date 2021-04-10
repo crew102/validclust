@@ -128,7 +128,11 @@ class ValidClust:
         dist_inds = ['silhouette', 'dunn']
 
         d_overlap = [i for i in self.indices if i in dist_inds]
-        dist = pairwise_distances(data) if d_overlap else None
+        if d_overlap:
+            dist = pairwise_distances(data)
+            np.fill_diagonal(dist, 0)
+        else:
+            dist = None
 
         index = pd.MultiIndex.from_product(
             [self.methods, self.indices],
