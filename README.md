@@ -3,6 +3,7 @@
 > Validate clustering results
 
 [![Linux Build Status](https://travis-ci.org/crew102/validclust.svg?branch=master)](https://travis-ci.org/crew102/validclust) 
+[![Documentation Status](https://readthedocs.org/projects/validclust/badge/?version=latest)](https://validclust.readthedocs.io/en/latest/?badge=latest)
 [![PyPI version](https://img.shields.io/pypi/v/validclust.svg)](https://pypi.org/project/validclust/)
 
 ## Motivation

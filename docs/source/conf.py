@@ -16,7 +16,6 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
 
-
 # -- Project information -----------------------------------------------------
 
 project = 'validclust'
@@ -27,7 +26,6 @@ author = 'Christopher Baker'
 version = ''
 # The full version, including alpha/beta/rc tags
 release = '0.1.0'
-
 
 # -- General configuration ---------------------------------------------------
 
@@ -42,7 +40,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
-    'm2r'
+    'm2r2'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
