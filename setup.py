@@ -25,5 +25,6 @@ setup(
         'packaging'
     ],
     tests_require='pytest',
-    setup_requires='pytest-runner'
+    setup_requires='pytest-runner',
+    python_requires='>=3.5'
 )
