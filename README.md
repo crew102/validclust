@@ -2,7 +2,7 @@
 
 > Validate clustering results
 
-[![Build](https://github.com/crew102/validclust/workflows/build/badge.svg)](https://github.com/crew102/validclust/actions)
+[![Build](https://github.com/crew102/validclust/actions/workflows/build.yml/badge.svg)](https://github.com/crew102/validclust/actions/workflows/build.yml)
 [![Documentation Status](https://readthedocs.org/projects/validclust/badge/?version=latest)](https://validclust.readthedocs.io/en/latest/?badge=latest)
 [![PyPI version](https://img.shields.io/pypi/v/validclust.svg)](https://pypi.org/project/validclust/)
 
