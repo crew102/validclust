@@ -18,7 +18,7 @@ setup(
     packages=['validclust'],
     install_requires=[
         'scikit-learn',
-        'pandas<1.2',
+        'pandas',
         'numpy>=1.16.5',
         'seaborn',
         'matplotlib',
