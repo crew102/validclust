@@ -3,8 +3,8 @@
 import warnings
 
 import numpy as np
-import sklearn
 from packaging import version
+import sklearn
 from sklearn.metrics import (
     davies_bouldin_score, silhouette_score, pairwise_distances
 )

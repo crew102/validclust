@@ -4,12 +4,11 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-
 from sklearn.cluster import AgglomerativeClustering, KMeans
 from sklearn.metrics import pairwise_distances
 from sklearn.preprocessing import normalize
 
-from .indices import (
+from validclust.indices import (
     _dunn, cop, _davies_bouldin_score2, _silhouette_score2,
     _calinski_harabaz_score2
 )
@@ -45,6 +44,8 @@ class ValidClust:
         A Pandas DataFrame with the computed cluster validity index values.
     """
     def __init__(self, k,
+                 # No big deal that these are lists (i.e., mutable), given that
+                 # we don't mutate them inside the class.
                  indices=['silhouette', 'calinski', 'davies', 'dunn'],
                  methods=['hierarchical', 'kmeans'],
                  linkage='ward', affinity='euclidean'):

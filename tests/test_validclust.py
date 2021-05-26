@@ -1,7 +1,7 @@
-import sklearn
-from packaging import version
 import pandas as pd
 import numpy as np
+from packaging import version
+import sklearn
 from sklearn.datasets import make_blobs
 from sklearn.datasets import load_iris
 from sklearn.cluster import AgglomerativeClustering, KMeans
@@ -14,8 +14,8 @@ if sklearn_version >= nm_chg_ver:
 else:
     from sklearn.metrics import calinski_harabaz_score as _cal_score
 
-from validclust.validclust import ValidClust
-from validclust.indices import dunn
+from validclust import ValidClust
+from validclust import dunn
 
 data, y = make_blobs(n_samples=500, centers=3, n_features=5, random_state=0)
 iris = load_iris()['data']
