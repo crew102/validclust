@@ -30,8 +30,8 @@ pip install git+https://github.com/crew102/validclust.git
 
 ```python
 import matplotlib.pyplot as plt
-from sklearn.datasets.samples_generator import make_blobs
-from validclust.validclust import ValidClust
+from sklearn.datasets import make_blobs
+from validclust import ValidClust
 ```
 
 <span>2.</span> Create some synthetic data. The data will be clustered around 4 centers.
